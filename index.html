@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Концепт UI/UX мессенджера в чистой продуктовой стилистике сервисов Яндекса."
+    />
+    <title>Мессенджер — UI/UX концепт</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Список диалогов">
+        <header class="brand-bar">
+          <a class="brand" href="#" aria-label="Главная">
+            <span class="brand-mark">Я</span>
+            <span class="brand-name">Мессенджер</span>
+          </a>
+          <button class="icon-button" type="button" aria-label="Создать чат">＋</button>
+        </header>
+
+        <section class="profile-card" aria-label="Профиль пользователя">
+          <div class="avatar avatar--user">АК</div>
+          <div>
+            <p class="eyebrow">Онлайн</p>
+            <h1>Аня Ковалёва</h1>
+          </div>
+          <span class="status-dot" aria-label="Статус онлайн"></span>
+        </section>
+
+        <label class="search-field">
+          <span class="visually-hidden">Поиск по чатам</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m21 21-4.35-4.35m1.35-5.65a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
+          </svg>
+          <input type="search" placeholder="Найти людей, чаты, файлы" />
+        </label>
+
+        <nav class="filter-tabs" aria-label="Фильтры чатов">
+          <button class="tab tab--active" type="button">Все</button>
+          <button class="tab" type="button">Личные</button>
+          <button class="tab" type="button">Команды</button>
+        </nav>
+
+        <section class="chat-list" aria-label="Диалоги">
+          <article class="chat-item chat-item--active">
+            <div class="avatar avatar--yellow">МК</div>
+            <div class="chat-preview">
+              <div class="chat-preview__top">
+                <h2>Маркетинг</h2>
+                <time datetime="2026-06-01T10:42">10:42</time>
+              </div>
+              <p>Собрала макеты для лендинга, нужен быстрый взгляд</p>
+            </div>
+            <span class="badge">3</span>
+          </article>
+
+          <article class="chat-item">
+            <div class="avatar avatar--blue">ДС</div>
+            <div class="chat-preview">
+              <div class="chat-preview__top">
+                <h2>Дима Смирнов</h2>
+                <time datetime="2026-06-01T09:18">09:18</time>
+              </div>
+              <p>Давай созвонимся после обеда?</p>
+            </div>
+          </article>
+
+          <article class="chat-item">
+            <div class="avatar avatar--green">UX</div>
+            <div class="chat-preview">
+              <div class="chat-preview__top">
+                <h2>UX Research</h2>
+                <time datetime="2026-05-31T19:04">вчера</time>
+              </div>
+              <p>Результаты интервью уже в общей папке</p>
+            </div>
+          </article>
+
+          <article class="chat-item">
+            <div class="avatar avatar--purple">ПР</div>
+            <div class="chat-preview">
+              <div class="chat-preview__top">
+                <h2>Продукт</h2>
+                <time datetime="2026-05-31T16:30">вчера</time>
+              </div>
+              <p>Подтвердили релиз на четверг</p>
+            </div>
+            <span class="badge badge--muted">1</span>
+          </article>
+        </section>
+      </aside>
+
+      <main class="conversation" aria-label="Открытый диалог">
+        <header class="conversation-header">
+          <div class="conversation-title">
+            <div class="avatar avatar--yellow">МК</div>
+            <div>
+              <p class="eyebrow">Командный чат · 12 участников</p>
+              <h2>Маркетинг</h2>
+            </div>
+          </div>
+          <div class="header-actions" aria-label="Действия с чатом">
+            <button class="pill-button" type="button">Файлы</button>
+            <button class="icon-button" type="button" aria-label="Начать звонок">☎</button>
+            <button class="icon-button" type="button" aria-label="Информация о чате">⋯</button>
+          </div>
+        </header>
+
+        <section class="workspace">
+          <section class="messages" aria-label="Сообщения">
+            <div class="date-chip">Сегодня, 1 июня</div>
+
+            <article class="message message--incoming">
+              <div class="avatar avatar--blue">ЛП</div>
+              <div class="message-bubble">
+                <div class="message-meta">
+                  <strong>Лена Петрова</strong>
+                  <time datetime="2026-06-01T10:21">10:21</time>
+                </div>
+                <p>Привет! Обновила структуру промо-экрана. Сделала акцент на быстрых действиях и понятных статусах.</p>
+              </div>
+            </article>
+
+            <article class="message message--incoming">
+              <div class="avatar avatar--green">ИС</div>
+              <div class="message-bubble message-bubble--attachment">
+                <div class="message-meta">
+                  <strong>Игорь Соколов</strong>
+                  <time datetime="2026-06-01T10:28">10:28</time>
+                </div>
+                <p>Добавил карточку с результатами кампании.</p>
+                <div class="attachment-card">
+                  <span class="file-icon">PDF</span>
+                  <div>
+                    <strong>campaign-report.pdf</strong>
+                    <span>2,4 МБ · Яндекс Диск</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="message message--outgoing">
+              <div class="message-bubble">
+                <div class="message-meta">
+                  <strong>Вы</strong>
+                  <time datetime="2026-06-01T10:36">10:36</time>
+                </div>
+                <p>Супер. Давайте оставим красную CTA-кнопку только для главного сценария, а вторичные действия спрячем в меню.</p>
+              </div>
+            </article>
+
+            <article class="message message--incoming">
+              <div class="avatar avatar--purple">НМ</div>
+              <div class="message-bubble">
+                <div class="message-meta">
+                  <strong>Никита Морозов</strong>
+                  <time datetime="2026-06-01T10:42">10:42</time>
+                </div>
+                <p>Поддерживаю. Тогда интерфейс выглядит легче и ближе к привычным сервисам.</p>
+              </div>
+            </article>
+          </section>
+
+          <aside class="details-panel" aria-label="Контекст чата">
+            <section class="summary-card">
+              <p class="eyebrow">Сводка</p>
+              <h3>Фокус на скорости</h3>
+              <p>Главные действия всегда под рукой: поиск, быстрый звонок, файлы и закреплённые материалы.</p>
+            </section>
+
+            <section class="tasks-card">
+              <div class="card-heading">
+                <h3>Сегодня</h3>
+                <span>4 задачи</span>
+              </div>
+              <ul class="task-list">
+                <li><span></span>Проверить CTA на промо</li>
+                <li><span></span>Согласовать иллюстрации</li>
+                <li><span></span>Выгрузить PDF в Диск</li>
+              </ul>
+            </section>
+
+            <section class="members-card">
+              <div class="card-heading">
+                <h3>Участники</h3>
+                <span>12</span>
+              </div>
+              <div class="member-stack" aria-label="Активные участники">
+                <span class="avatar avatar--blue">ЛП</span>
+                <span class="avatar avatar--green">ИС</span>
+                <span class="avatar avatar--purple">НМ</span>
+                <span class="avatar avatar--yellow">+9</span>
+              </div>
+            </section>
+          </aside>
+        </section>
+
+        <footer class="composer" aria-label="Новое сообщение">
+          <button class="icon-button" type="button" aria-label="Прикрепить файл">⌘</button>
+          <label class="composer-input">
+            <span class="visually-hidden">Текст сообщения</span>
+            <input type="text" placeholder="Напишите сообщение" />
+          </label>
+          <button class="send-button" type="button">Отправить</button>
+        </footer>
+      </main>
+    </div>
+  </body>
+</html>
