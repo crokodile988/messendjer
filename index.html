@@ -5,214 +5,581 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Концепт UI/UX мессенджера в чистой продуктовой стилистике сервисов Яндекса."
+      content="Однофайловая демка UI/UX мессенджера в стилистике сервисов Яндекса."
     />
-    <title>Мессенджер — UI/UX концепт</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
+    <title>Я.Мессенджер — демо UI</title>
+    <style>
+      :root {
+        --ya-red: #fc3f1d;
+        --ya-yellow: #ffcc00;
+        --ink: #151515;
+        --text: #363636;
+        --muted: #8f8f8f;
+        --line: #e8e8e8;
+        --bg: #f5f6f8;
+        --card: #ffffff;
+        --soft: #f0f2f5;
+        --green: #19b45b;
+        --shadow: 0 26px 70px rgba(24, 32, 48, 0.13);
+        --radius: 28px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        min-height: 100vh;
+        margin: 0;
+        color: var(--text);
+        background:
+          radial-gradient(circle at 12% 10%, rgba(255, 204, 0, 0.5), transparent 28rem),
+          radial-gradient(circle at 92% 6%, rgba(252, 63, 29, 0.16), transparent 24rem),
+          linear-gradient(145deg, #fff 0%, var(--bg) 54%, #edf0f5 100%);
+      }
+
+      button,
+      input { font: inherit; }
+
+      button {
+        cursor: pointer;
+        border: 0;
+      }
+
+      .demo {
+        display: grid;
+        grid-template-columns: 330px minmax(0, 1fr);
+        width: min(1180px, calc(100vw - 32px));
+        min-height: min(820px, calc(100vh - 32px));
+        margin: 16px auto;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.84);
+        border: 1px solid rgba(255, 255, 255, 0.9);
+        border-radius: 34px;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(22px);
+      }
+
+      .sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        padding: 22px;
+        background: rgba(255, 255, 255, 0.92);
+        border-right: 1px solid var(--line);
+      }
+
+      .brand,
+      .topbar,
+      .chat,
+      .chat-row,
+      .profile,
+      .message-head,
+      .composer,
+      .quick-actions {
+        display: flex;
+        align-items: center;
+      }
+
+      .topbar,
+      .message-head { justify-content: space-between; }
+
+      .brand {
+        gap: 10px;
+        color: var(--ink);
+        font-size: 20px;
+        font-weight: 800;
+        letter-spacing: -0.04em;
+      }
+
+      .brand-logo {
+        display: grid;
+        place-items: center;
+        width: 42px;
+        height: 42px;
+        color: #fff;
+        background: var(--ya-red);
+        border-radius: 50%;
+        font-size: 24px;
+        font-weight: 900;
+      }
+
+      .round-btn,
+      .send-btn,
+      .chip,
+      .filter {
+        transition: transform 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+      }
+
+      .round-btn {
+        display: grid;
+        place-items: center;
+        width: 42px;
+        height: 42px;
+        color: var(--ink);
+        background: var(--soft);
+        border-radius: 50%;
+      }
+
+      .round-btn:hover,
+      .send-btn:hover,
+      .chip:hover,
+      .filter:hover { transform: translateY(-1px); }
+
+      .profile {
+        position: relative;
+        gap: 12px;
+        padding: 16px;
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+      }
+
+      .profile b,
+      .chat-title,
+      .dialog-title h1 { color: var(--ink); }
+
+      .profile span,
+      .chat-text,
+      .dialog-title p,
+      .time { color: var(--muted); }
+
+      .avatar {
+        display: grid;
+        flex: 0 0 auto;
+        place-items: center;
+        width: 46px;
+        height: 46px;
+        color: var(--ink);
+        background: var(--ya-yellow);
+        border-radius: 16px;
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .avatar.blue { background: #dcecff; }
+      .avatar.green { background: #dcf6df; }
+      .avatar.purple { background: #eee4ff; }
+      .avatar.red { color: #fff; background: var(--ya-red); }
+
+      .online {
+        width: 10px;
+        height: 10px;
+        margin-left: auto;
+        background: var(--green);
+        border-radius: 50%;
+        box-shadow: 0 0 0 4px #e8f8ef;
+      }
+
+      .search {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        padding: 0 14px;
+        background: var(--soft);
+        border: 1px solid transparent;
+        border-radius: 18px;
+      }
+
+      .search input,
+      .composer input {
+        width: 100%;
+        min-width: 0;
+        padding: 14px 0;
+        color: var(--ink);
+        background: transparent;
+        border: 0;
+        outline: 0;
+      }
+
+      .filters,
+      .quick-actions {
+        display: flex;
+        gap: 8px;
+      }
+
+      .filter,
+      .chip {
+        padding: 10px 14px;
+        color: var(--ink);
+        background: var(--soft);
+        border-radius: 999px;
+        font-weight: 700;
+      }
+
+      .filter.active,
+      .chip.active {
+        background: var(--ya-yellow);
+        box-shadow: 0 10px 24px rgba(255, 204, 0, 0.22);
+      }
+
+      .chat-list {
+        display: grid;
+        gap: 10px;
+      }
+
+      .chat {
+        gap: 12px;
+        padding: 12px;
+        text-align: left;
+        background: transparent;
+        border-radius: 20px;
+      }
+
+      .chat.active {
+        background: #fff7cc;
+        box-shadow: inset 0 0 0 1px rgba(255, 204, 0, 0.5);
+      }
+
+      .chat-row { gap: 8px; justify-content: space-between; }
+      .chat-main { min-width: 0; flex: 1; }
+      .chat-title { margin: 0; font-size: 15px; font-weight: 800; }
+      .chat-text { margin: 4px 0 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .badge { min-width: 24px; padding: 3px 7px; color: #fff; background: var(--ya-red); border-radius: 999px; font-size: 12px; font-weight: 800; text-align: center; }
+
+      .dialog {
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        min-width: 0;
+        background: rgba(250, 251, 252, 0.72);
+      }
+
+      .dialog-header {
+        display: flex;
+        gap: 14px;
+        align-items: center;
+        justify-content: space-between;
+        padding: 22px 26px;
+        background: rgba(255, 255, 255, 0.7);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .dialog-title {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        min-width: 0;
+      }
+
+      .dialog-title h1 { margin: 0; font-size: 24px; letter-spacing: -0.04em; }
+      .dialog-title p { margin: 3px 0 0; font-size: 13px; }
+
+      .messages {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        padding: 24px 26px;
+        overflow: auto;
+      }
+
+      .date {
+        align-self: center;
+        padding: 8px 12px;
+        color: var(--muted);
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .message {
+        display: flex;
+        gap: 10px;
+        max-width: 72%;
+      }
+
+      .message.me {
+        align-self: flex-end;
+        flex-direction: row-reverse;
+      }
+
+      .bubble {
+        padding: 14px 16px;
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        box-shadow: 0 12px 28px rgba(20, 28, 42, 0.06);
+      }
+
+      .me .bubble {
+        color: #191200;
+        background: #ffe680;
+        border-color: #ffd633;
+      }
+
+      .message-head { gap: 16px; margin-bottom: 6px; }
+      .message-head b { color: var(--ink); font-size: 14px; }
+      .time { font-size: 12px; }
+      .bubble p { margin: 0; line-height: 1.45; }
+
+      .mock-card {
+        display: grid;
+        gap: 8px;
+        width: min(320px, 100%);
+        margin-top: 10px;
+        padding: 12px;
+        background: #f7f8fa;
+        border: 1px dashed #d9dde5;
+        border-radius: 18px;
+      }
+
+      .mock-card strong { color: var(--ink); }
+      .progress { height: 8px; overflow: hidden; background: #e6e8ee; border-radius: 999px; }
+      .progress span { display: block; width: 72%; height: 100%; background: var(--ya-red); border-radius: inherit; }
+
+      .composer-wrap {
+        padding: 18px 26px 22px;
+        background: rgba(255, 255, 255, 0.82);
+        border-top: 1px solid var(--line);
+      }
+
+      .composer {
+        gap: 10px;
+        padding: 8px;
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+      }
+
+      .send-btn {
+        padding: 14px 18px;
+        color: #fff;
+        background: var(--ya-red);
+        border-radius: 18px;
+        font-weight: 800;
+        box-shadow: 0 12px 26px rgba(252, 63, 29, 0.26);
+      }
+
+      .toast {
+        position: fixed;
+        left: 50%;
+        bottom: 24px;
+        z-index: 5;
+        padding: 12px 16px;
+        color: #fff;
+        background: #202124;
+        border-radius: 999px;
+        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.2);
+        opacity: 0;
+        transform: translate(-50%, 14px);
+        pointer-events: none;
+        transition: 0.22s ease;
+      }
+
+      .toast.show {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+
+      @media (max-width: 820px) {
+        .demo {
+          grid-template-columns: 1fr;
+          width: 100%;
+          min-height: 100vh;
+          margin: 0;
+          border-radius: 0;
+        }
+
+        .sidebar { display: none; }
+        .message { max-width: 92%; }
+        .dialog-header { align-items: flex-start; }
+        .quick-actions { flex-wrap: wrap; justify-content: flex-end; }
+      }
+    </style>
   </head>
   <body>
-    <div class="app-shell">
-      <aside class="sidebar" aria-label="Список диалогов">
-        <header class="brand-bar">
-          <a class="brand" href="#" aria-label="Главная">
-            <span class="brand-mark">Я</span>
-            <span class="brand-name">Мессенджер</span>
-          </a>
-          <button class="icon-button" type="button" aria-label="Создать чат">＋</button>
-        </header>
-
-        <section class="profile-card" aria-label="Профиль пользователя">
-          <div class="avatar avatar--user">АК</div>
-          <div>
-            <p class="eyebrow">Онлайн</p>
-            <h1>Аня Ковалёва</h1>
+    <main class="demo" aria-label="Демо мессенджера">
+      <aside class="sidebar" aria-label="Список чатов">
+        <div class="topbar">
+          <div class="brand" aria-label="Я.Мессенджер">
+            <span class="brand-logo">Я</span>
+            <span>Мессенджер</span>
           </div>
-          <span class="status-dot" aria-label="Статус онлайн"></span>
+          <button class="round-btn" type="button" data-toast="Новый чат — просто демо кнопки" aria-label="Создать чат">＋</button>
+        </div>
+
+        <section class="profile" aria-label="Профиль">
+          <span class="avatar red">АК</span>
+          <div>
+            <b>Аня Ковалёва</b><br />
+            <span>онлайн</span>
+          </div>
+          <span class="online" aria-label="Онлайн"></span>
         </section>
 
-        <label class="search-field">
-          <span class="visually-hidden">Поиск по чатам</span>
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="m21 21-4.35-4.35m1.35-5.65a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
-          </svg>
-          <input type="search" placeholder="Найти людей, чаты, файлы" />
+        <label class="search">
+          <span aria-hidden="true">⌕</span>
+          <input id="search" type="search" placeholder="Поиск по чатам" />
         </label>
 
-        <nav class="filter-tabs" aria-label="Фильтры чатов">
-          <button class="tab tab--active" type="button">Все</button>
-          <button class="tab" type="button">Личные</button>
-          <button class="tab" type="button">Команды</button>
+        <nav class="filters" aria-label="Фильтры">
+          <button class="filter active" type="button">Все</button>
+          <button class="filter" type="button">Личные</button>
+          <button class="filter" type="button">Команды</button>
         </nav>
 
-        <section class="chat-list" aria-label="Диалоги">
-          <article class="chat-item chat-item--active">
-            <div class="avatar avatar--yellow">МК</div>
-            <div class="chat-preview">
-              <div class="chat-preview__top">
-                <h2>Маркетинг</h2>
-                <time datetime="2026-06-01T10:42">10:42</time>
-              </div>
-              <p>Собрала макеты для лендинга, нужен быстрый взгляд</p>
-            </div>
+        <section class="chat-list" aria-label="Чаты">
+          <button class="chat active" type="button" data-title="Маркетинг" data-subtitle="Командный чат · 12 участников" data-avatar="МК" data-color="">
+            <span class="avatar">МК</span>
+            <span class="chat-main">
+              <span class="chat-row"><span class="chat-title">Маркетинг</span><span class="time">10:42</span></span>
+              <span class="chat-text">Собрала макеты, нужен быстрый взгляд</span>
+            </span>
             <span class="badge">3</span>
-          </article>
+          </button>
 
-          <article class="chat-item">
-            <div class="avatar avatar--blue">ДС</div>
-            <div class="chat-preview">
-              <div class="chat-preview__top">
-                <h2>Дима Смирнов</h2>
-                <time datetime="2026-06-01T09:18">09:18</time>
-              </div>
-              <p>Давай созвонимся после обеда?</p>
-            </div>
-          </article>
+          <button class="chat" type="button" data-title="Дима Смирнов" data-subtitle="личный чат · был 5 минут назад" data-avatar="ДС" data-color="blue">
+            <span class="avatar blue">ДС</span>
+            <span class="chat-main">
+              <span class="chat-row"><span class="chat-title">Дима Смирнов</span><span class="time">09:18</span></span>
+              <span class="chat-text">Давай созвонимся после обеда?</span>
+            </span>
+          </button>
 
-          <article class="chat-item">
-            <div class="avatar avatar--green">UX</div>
-            <div class="chat-preview">
-              <div class="chat-preview__top">
-                <h2>UX Research</h2>
-                <time datetime="2026-05-31T19:04">вчера</time>
-              </div>
-              <p>Результаты интервью уже в общей папке</p>
-            </div>
-          </article>
-
-          <article class="chat-item">
-            <div class="avatar avatar--purple">ПР</div>
-            <div class="chat-preview">
-              <div class="chat-preview__top">
-                <h2>Продукт</h2>
-                <time datetime="2026-05-31T16:30">вчера</time>
-              </div>
-              <p>Подтвердили релиз на четверг</p>
-            </div>
-            <span class="badge badge--muted">1</span>
-          </article>
+          <button class="chat" type="button" data-title="UX Research" data-subtitle="Команда исследований · 8 участников" data-avatar="UX" data-color="green">
+            <span class="avatar green">UX</span>
+            <span class="chat-main">
+              <span class="chat-row"><span class="chat-title">UX Research</span><span class="time">вчера</span></span>
+              <span class="chat-text">Результаты интервью уже в папке</span>
+            </span>
+          </button>
         </section>
       </aside>
 
-      <main class="conversation" aria-label="Открытый диалог">
-        <header class="conversation-header">
-          <div class="conversation-title">
-            <div class="avatar avatar--yellow">МК</div>
+      <section class="dialog" aria-label="Открытый диалог">
+        <header class="dialog-header">
+          <div class="dialog-title">
+            <span id="dialogAvatar" class="avatar">МК</span>
             <div>
-              <p class="eyebrow">Командный чат · 12 участников</p>
-              <h2>Маркетинг</h2>
+              <h1 id="dialogTitle">Маркетинг</h1>
+              <p id="dialogSubtitle">Командный чат · 12 участников</p>
             </div>
           </div>
-          <div class="header-actions" aria-label="Действия с чатом">
-            <button class="pill-button" type="button">Файлы</button>
-            <button class="icon-button" type="button" aria-label="Начать звонок">☎</button>
-            <button class="icon-button" type="button" aria-label="Информация о чате">⋯</button>
+          <div class="quick-actions" aria-label="Быстрые действия">
+            <button class="chip active" type="button" data-toast="В демке открыт раздел сообщений">Сообщения</button>
+            <button class="chip" type="button" data-toast="Файлы — заглушка для сценария">Файлы</button>
+            <button class="round-btn" type="button" data-toast="Звонок запущен в демо-режиме" aria-label="Звонок">☎</button>
           </div>
         </header>
 
-        <section class="workspace">
-          <section class="messages" aria-label="Сообщения">
-            <div class="date-chip">Сегодня, 1 июня</div>
+        <section id="messages" class="messages" aria-live="polite">
+          <div class="date">Сегодня, 1 июня</div>
 
-            <article class="message message--incoming">
-              <div class="avatar avatar--blue">ЛП</div>
-              <div class="message-bubble">
-                <div class="message-meta">
-                  <strong>Лена Петрова</strong>
-                  <time datetime="2026-06-01T10:21">10:21</time>
-                </div>
-                <p>Привет! Обновила структуру промо-экрана. Сделала акцент на быстрых действиях и понятных статусах.</p>
-              </div>
-            </article>
+          <article class="message">
+            <span class="avatar blue">ЛП</span>
+            <div class="bubble">
+              <div class="message-head"><b>Лена</b><span class="time">10:21</span></div>
+              <p>Привет! Сделала промо-экран более похожим на продуктовый стиль Яндекса: светло, крупно, с жёлтым акцентом.</p>
+            </div>
+          </article>
 
-            <article class="message message--incoming">
-              <div class="avatar avatar--green">ИС</div>
-              <div class="message-bubble message-bubble--attachment">
-                <div class="message-meta">
-                  <strong>Игорь Соколов</strong>
-                  <time datetime="2026-06-01T10:28">10:28</time>
-                </div>
-                <p>Добавил карточку с результатами кампании.</p>
-                <div class="attachment-card">
-                  <span class="file-icon">PDF</span>
-                  <div>
-                    <strong>campaign-report.pdf</strong>
-                    <span>2,4 МБ · Яндекс Диск</span>
-                  </div>
-                </div>
+          <article class="message">
+            <span class="avatar green">ИС</span>
+            <div class="bubble">
+              <div class="message-head"><b>Илья</b><span class="time">10:29</span></div>
+              <p>Оставил только главный сценарий: список чатов, переписка и пара кликабельных кнопок.</p>
+              <div class="mock-card">
+                <strong>UI-kit демо</strong>
+                <span>Карточка вложения без реальной загрузки</span>
+                <div class="progress"><span></span></div>
               </div>
-            </article>
+            </div>
+          </article>
 
-            <article class="message message--outgoing">
-              <div class="message-bubble">
-                <div class="message-meta">
-                  <strong>Вы</strong>
-                  <time datetime="2026-06-01T10:36">10:36</time>
-                </div>
-                <p>Супер. Давайте оставим красную CTA-кнопку только для главного сценария, а вторичные действия спрячем в меню.</p>
-              </div>
-            </article>
-
-            <article class="message message--incoming">
-              <div class="avatar avatar--purple">НМ</div>
-              <div class="message-bubble">
-                <div class="message-meta">
-                  <strong>Никита Морозов</strong>
-                  <time datetime="2026-06-01T10:42">10:42</time>
-                </div>
-                <p>Поддерживаю. Тогда интерфейс выглядит легче и ближе к привычным сервисам.</p>
-              </div>
-            </article>
-          </section>
-
-          <aside class="details-panel" aria-label="Контекст чата">
-            <section class="summary-card">
-              <p class="eyebrow">Сводка</p>
-              <h3>Фокус на скорости</h3>
-              <p>Главные действия всегда под рукой: поиск, быстрый звонок, файлы и закреплённые материалы.</p>
-            </section>
-
-            <section class="tasks-card">
-              <div class="card-heading">
-                <h3>Сегодня</h3>
-                <span>4 задачи</span>
-              </div>
-              <ul class="task-list">
-                <li><span></span>Проверить CTA на промо</li>
-                <li><span></span>Согласовать иллюстрации</li>
-                <li><span></span>Выгрузить PDF в Диск</li>
-              </ul>
-            </section>
-
-            <section class="members-card">
-              <div class="card-heading">
-                <h3>Участники</h3>
-                <span>12</span>
-              </div>
-              <div class="member-stack" aria-label="Активные участники">
-                <span class="avatar avatar--blue">ЛП</span>
-                <span class="avatar avatar--green">ИС</span>
-                <span class="avatar avatar--purple">НМ</span>
-                <span class="avatar avatar--yellow">+9</span>
-              </div>
-            </section>
-          </aside>
+          <article class="message me">
+            <span class="avatar">АК</span>
+            <div class="bubble">
+              <div class="message-head"><b>Вы</b><span class="time">10:42</span></div>
+              <p>Да, это именно однофайловая демонстрация: можно открыть index.html и показать настроение интерфейса.</p>
+            </div>
+          </article>
         </section>
 
-        <footer class="composer" aria-label="Новое сообщение">
-          <button class="icon-button" type="button" aria-label="Прикрепить файл">⌘</button>
-          <label class="composer-input">
-            <span class="visually-hidden">Текст сообщения</span>
-            <input type="text" placeholder="Напишите сообщение" />
-          </label>
-          <button class="send-button" type="button">Отправить</button>
+        <footer class="composer-wrap">
+          <form id="composer" class="composer">
+            <button class="round-btn" type="button" data-toast="Вложение добавлено в демо" aria-label="Прикрепить">＋</button>
+            <input id="messageInput" type="text" autocomplete="off" placeholder="Напишите сообщение" />
+            <button class="send-btn" type="submit">Отправить</button>
+          </form>
         </footer>
-      </main>
-    </div>
+      </section>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script>
+      const chats = document.querySelectorAll('.chat');
+      const filters = document.querySelectorAll('.filter');
+      const chips = document.querySelectorAll('.chip');
+      const toast = document.querySelector('#toast');
+      const messages = document.querySelector('#messages');
+      const composer = document.querySelector('#composer');
+      const input = document.querySelector('#messageInput');
+      const dialogTitle = document.querySelector('#dialogTitle');
+      const dialogSubtitle = document.querySelector('#dialogSubtitle');
+      const dialogAvatar = document.querySelector('#dialogAvatar');
+      let toastTimer;
+
+      function showToast(text) {
+        toast.textContent = text;
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toast.classList.remove('show'), 1800);
+      }
+
+      function setActive(items, activeItem) {
+        items.forEach((item) => item.classList.toggle('active', item === activeItem));
+      }
+
+      chats.forEach((chat) => {
+        chat.addEventListener('click', () => {
+          setActive(chats, chat);
+          dialogTitle.textContent = chat.dataset.title;
+          dialogSubtitle.textContent = chat.dataset.subtitle;
+          dialogAvatar.textContent = chat.dataset.avatar;
+          dialogAvatar.className = `avatar ${chat.dataset.color}`.trim();
+          showToast(`Открыт чат «${chat.dataset.title}»`);
+        });
+      });
+
+      filters.forEach((filter) => {
+        filter.addEventListener('click', () => {
+          setActive(filters, filter);
+          showToast(`Фильтр: ${filter.textContent}`);
+        });
+      });
+
+      chips.forEach((chip) => {
+        chip.addEventListener('click', () => setActive(chips, chip));
+      });
+
+      document.querySelectorAll('[data-toast]').forEach((button) => {
+        button.addEventListener('click', () => showToast(button.dataset.toast));
+      });
+
+      composer.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const text = input.value.trim();
+        if (!text) {
+          showToast('Введите текст сообщения');
+          return;
+        }
+
+        const article = document.createElement('article');
+        article.className = 'message me';
+        article.innerHTML = `
+          <span class="avatar">АК</span>
+          <div class="bubble">
+            <div class="message-head"><b>Вы</b><span class="time">сейчас</span></div>
+            <p></p>
+          </div>
+        `;
+        article.querySelector('p').textContent = text;
+        messages.appendChild(article);
+        input.value = '';
+        messages.scrollTop = messages.scrollHeight;
+        showToast('Сообщение добавлено в демо');
+      });
+    </script>
   </body>
 </html>
